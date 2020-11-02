@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CST.WebApp.MVC.Models.CategoriaViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Categorias";
+    var contTabela = 1;
+}
+
+<section class="section-conten padding-y container" style="min-height: 35vh">
+    <div class="row hidden-xs">
+        <div class="col-md-12 col-xs-12">
+            <ul class="site-breadcrumbs">
+                <li class="no-padding">
+                    <a class="cursor-pointer"
+                       asp-controller="Produto" asp-action="Index">
+                        <i class="fa fa-university" aria-hidden="true"></i>
+                        &nbsp; PÁGINA INICIAL (HOME)
+                    </a>
+                </li>                
+                <li class="text-bold">
+                    LISTAGEM DE CATEGORIAS
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h2 class="text-center">Listagem de Categorias</h2>
+    <br />
+    <a class="btn btn-primary margin-bottom-10 cursor-pointer color-white button-border-radius"
+       asp-controller="Categoria" asp-action="Registro">
+        <i class="fa fa-plus"
+           aria-hidden="true"></i>
+        Adicionar Categoria
+    </a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col">ID em formato GUID</th>
+                <th scope="col">Nome</th>
+                <th scope="col" class="text-center">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var categoria in Model.OrderBy(c => c.Nome))
+            {
+                <tr>
+                    <th scope="row" class="text-center">@contTabela</th>
+                    <td>@categoria.Id</td>
+                    <td>@categoria.Nome</td>
+                    <td class="text-center">
+                        <a class="btn btn-info button-border-radius"
+                                asp-controller="Categoria" asp-action="Atualizar" asp-route-id="@categoria.Id">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            Editar
+                        </a>
+                        <a class="btn btn-danger button-border-radius"
+                           asp-controller="Categoria" asp-action="Deletar" asp-route-id="@categoria.Id">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            Deletar
+                        </a>
+                    </td>
+                </tr>
+                contTabela++;
+            }
+        </tbody>
+    </table>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

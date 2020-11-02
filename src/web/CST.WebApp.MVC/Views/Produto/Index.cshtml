@@ -1,0 +1,53 @@
+﻿@using CST.WebApp.MVC.Extensions
+@model IEnumerable<CST.WebApp.MVC.Models.ProdutoViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Produtos";
+}
+
+<section>
+    <div>
+        <div class="container" style="padding-top: 20px">
+            <a class="btn btn-primary margin-bottom-10 color-white cursor-pointer button-border-radius margin-right-15"
+               asp-controller="Produto" asp-action="Registro">
+                <i class="fa fa-plus"
+                   aria-hidden="true"></i> Adicionar Produto
+            </a>
+            <a class="btn btn-primary margin-bottom-10 color-white cursor-pointer button-border-radius"
+               asp-controller="Categoria" asp-action="Index">
+                <i class="fa fa-list"
+                   aria-hidden="true"></i> Listar Categorias
+            </a>
+            <div class="row">
+                @foreach (var produto in Model.OrderBy(p => p.Nome))
+                {
+                    <div class="col-md-3">
+                        <div href="#" class="card card-product-grid" style="max-height: 415px; height: 415px;">
+                            <a asp-controller="Produto" asp-action="Detalhe" asp-route-id="@produto.Id" class="img-wrap">
+                                <img src="@produto.Imagem" alt="">
+                            </a>
+                            <figcaption class="info-wrap">
+                                <a asp-controller="Produto" asp-action="Detalhe" asp-route-id="@produto.Id" class="title">
+                                    <b>@produto.Nome</b>
+                                </a>
+                                <small class="card-text">
+                                    @this.MensagemEstoque(produto.QuantidadeEstoque)<br /><br />
+                                    <span>
+                                        @produto.Descricao
+                                    </span>
+                                </small>
+                            </figcaption>
+                            <div class="card-footer price mt-1">
+                                <h3>@this.FormatoMoeda(produto.Valor)</h3>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

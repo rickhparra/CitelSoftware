@@ -1,0 +1,86 @@
+﻿@model CST.WebApp.MVC.Models.ProdutoViewModel
+
+@{
+    ViewData["Title"] = "Registro de Produto";
+}
+
+<section class="section-conten padding-y container" style="min-height: 35vh">
+    <div class="row hidden-xs">
+        <div class="col-md-12 col-xs-12">
+            <ul class="site-breadcrumbs">
+                <li class="no-padding">
+                    <a class="cursor-pointer"
+                       asp-controller="Produto" asp-action="Index">
+                        <i class="fa fa-university" aria-hidden="true"></i>
+                        &nbsp; PÁGINA INICIAL (HOME)
+                    </a>
+                </li>                
+                <li class="text-bold">
+                    REGISTRAR PRODUTO
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br />
+
+    <vc:Summary></vc:Summary>
+
+    <div class="card mx-auto" style="max-width: 380px; margin-top: 50px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4 text-center">Registrar novo Produto</h4>
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Nome"></label>
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descricao"></label>
+                    <textarea asp-for="Descricao" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Valor"></label>
+                    <input asp-for="Valor" class="form-control" />
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Imagem"></label>
+                    <input asp-for="Imagem" class="form-control" />
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="QuantidadeEstoque"></label>
+                    <input asp-for="QuantidadeEstoque" class="form-control" onkeypress="return isNumberKey(event)" />
+                    <span asp-validation-for="QuantidadeEstoque" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoriaId"></label>
+                    <select asp-for="CategoriaId" asp-items="@ViewBag.ListaCategorias" class="form-control">
+                        <option disabled selected>Selecione a categoria...</option>
+                    </select>
+                    <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {    
+    <script>
+        $(document).ready(function () {
+            $('#Valor').maskMoney({ thousands: '.', decimal: ',', affixesStay: false });
+        });
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+}
